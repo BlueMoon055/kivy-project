@@ -5,12 +5,16 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+from kivy.core.window import Window
+
+Window.size = (300, 690)
+Window.title = 'my Random'
 
 class MenuScreen(Screen):  # класс-наследник
     def __init__(self, **kw):  # конструктор
         super(MenuScreen, self).__init__(**kw)  # наследование свойств из супер-класса
         self.box = BoxLayout(orientation='vertical')
-        self.main_text = Label(text='RANDOM')
+        self.main_text = Label(text='my RANDOM')
         self.image_food = Image(source='food.jpg')
         self.food_text = Label(text='Блюдо')
         self.image_sound = Image(source='sound.jpeg')
