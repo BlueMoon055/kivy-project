@@ -17,6 +17,7 @@ class MenuScreen(Screen):  # класс-наследник
     def __init__(self, **kw):  # конструктор
         super(MenuScreen, self).__init__(**kw)  # наследование свойств из супер-класса
         self.box = BoxLayout(orientation='vertical')
+        self.title = 'MyRandom'
 
         # Указываем, что Label будет занимать всю ширину
         self.main_text = Label(
@@ -45,19 +46,21 @@ class MenuScreen(Screen):  # класс-наследник
         self.add_widget(self.box)
 
 class Food(Screen):
-    def __init__(self, **kw):  # конструктор
-        super(Food, self).__init__(**kw)  # наследование свойств из супер-класса
+    def __init__(self, **kw):
+        super(Food, self).__init__(**kw)
         self.box = BoxLayout(orientation='vertical')
 
-        # Указываем, что Label будет занимать всю ширину
+        # Список блюд для случайного выбора
+        self.ch_food = ['Пицца', 'Суши', 'Блины', 'Бургеры']
+
+        # Основной заголовок
         self.main_text = Label(
             text='my RANDOM',
             halign="left",
             color=(0, 0, 0, 1),
-            size_hint=(1, None),  # растягиваем по ширине
-            height=50,)  # фиксированная высота
-        self.main_text.bind(size=self.main_text.setter('text_size'))  # Устанавливаем text_size принудительно
-
+            size_hint=(1, None),
+            height=50)
+        self.main_text.bind(size=self.main_text.setter('text_size'))
         self.food_main_text = Label(text='Блюдо', color=(0, 0, 0, 1))
         self.image = Image(source='food.jpg')
         self.food_text = Label(text='Блюда:', color=(0, 0, 0, 1))
@@ -65,8 +68,18 @@ class Food(Screen):
         self.sushi_text = Label(text='Суши', color=(0, 0, 0, 1))
         self.pancakes_text = Label(text='Блины', color=(0, 0, 0, 1))
         self.burgers_text = Label(text='Бургеры', color=(0, 0, 0, 1))
+
+        self.random_text = Label(
+            text='ВАМ ВЫПАЛО',
+            color=(1, 0, 0, 1),
+            size_hint=(1, None),
+            height=40)
+
         self.my_ch_button = Button(text='ВЫБРАТЬ БЛЮДО')
+        self.my_ch_button.bind(on_press=self.on_button_click)
         self.back_button = Button(text='НАЗАД', on_press=lambda x: set_screen('menu'))
+
+        # Добавляем виджеты в layout
         self.box.add_widget(self.main_text)
         self.box.add_widget(self.food_main_text)
         self.box.add_widget(self.image)
@@ -75,14 +88,25 @@ class Food(Screen):
         self.box.add_widget(self.sushi_text)
         self.box.add_widget(self.pancakes_text)
         self.box.add_widget(self.burgers_text)
+        self.box.add_widget(self.random_text)
         self.box.add_widget(self.my_ch_button)
         self.box.add_widget(self.back_button)
         self.add_widget(self.box)
+
+    def on_button_click(self, instance):
+        # Проверяем, что список блюд не пуст
+        if self.ch_food:
+            random_food = random.choice(self.ch_food)
+            # Обновляем текст существующего Label
+            self.random_text.text = f'ВАМ ВЫПАЛО: {random_food}'
 
 class Sound(Screen):
     def __init__(self, **kw):  # конструктор
         super(Sound, self).__init__(**kw)  # наследование свойств из супер-класса
         self.box = BoxLayout(orientation='vertical')
+
+        # список для случайного выбора
+        self.ch_sound = ['Смех', 'Крик', 'Плачь', 'Лай']
 
         # Указываем, что Label будет занимать всю ширину
         self.main_text = Label(
@@ -100,7 +124,15 @@ class Sound(Screen):
         self.sound2_text = Label(text='Крик', color=(0, 0, 0, 1))
         self.sound3_text = Label(text='Плачь', color=(0, 0, 0, 1))
         self.sound4_text = Label(text='Лай', color=(0, 0, 0, 1))
+
+        self.random_text = Label(
+            text='ВАМ ВЫПАЛО',
+            color=(1, 0, 0, 1),
+            size_hint=(1, None),
+            height=40)
+
         self.my_ch_button = Button(text='ВЫБРАТЬ ЗВУК')
+        self.my_ch_button.bind(on_press=self.on_button_click)
         self.back_button = Button(text='НАЗАД', on_press=lambda x: set_screen('menu'))
         self.box.add_widget(self.main_text)
         self.box.add_widget(self.sound_main_text)
@@ -110,14 +142,24 @@ class Sound(Screen):
         self.box.add_widget(self.sound2_text)
         self.box.add_widget(self.sound3_text)
         self.box.add_widget(self.sound4_text)
+        self.box.add_widget(self.random_text)
         self.box.add_widget(self.my_ch_button)
         self.box.add_widget(self.back_button)
         self.add_widget(self.box)
+
+    def on_button_click(self, instance):
+        # Проверяем, что список блюд не пуст
+        if self.ch_sound:
+            random_sound = random.choice(self.ch_sound)
+            # Обновляем текст существующего Label
+            self.random_text.text = f'ВАМ ВЫПАЛО: {random_sound}'
 
 class Cube(Screen):
     def __init__(self, **kw):  # конструктор
         super(Cube, self).__init__(**kw)  # наследование свойств из супер-класса
         self.box = BoxLayout(orientation='vertical')
+
+        self.ch_num = ['1', '2', '3', '4', '5', '6']
 
         # Указываем, что Label будет занимать всю ширину
         self.main_text = Label(
@@ -137,7 +179,15 @@ class Cube(Screen):
         self.num4_text = Label(text='4', color=(0, 0, 0, 1))
         self.num5_text = Label(text='5', color=(0, 0, 0, 1))
         self.num6_text = Label(text='6', color=(0, 0, 0, 1))
+
+        self.random_text = Label(
+            text='ВАМ ВЫПАЛО',
+            color=(1, 0, 0, 1),
+            size_hint=(1, None),
+            height=40)
+
         self.my_ch_button = Button(text='БРОСИТЬ КУБИК')
+        self.my_ch_button.bind(on_press=self.on_button_click)
         self.back_button = Button(text='НАЗАД', on_press=lambda x: set_screen('menu'))
         self.box.add_widget(self.main_text)
         self.box.add_widget(self.cube_main_text)
@@ -149,9 +199,17 @@ class Cube(Screen):
         self.box.add_widget(self.num4_text)
         self.box.add_widget(self.num5_text)
         self.box.add_widget(self.num6_text)
+        self.box.add_widget(self.random_text)
         self.box.add_widget(self.my_ch_button)
         self.box.add_widget(self.back_button)
         self.add_widget(self.box)
+
+    def on_button_click(self, instance):
+        # Проверяем, что список блюд не пуст
+        if self.ch_num:
+            random_num = random.choice(self.ch_num)
+            # Обновляем текст существующего Label
+            self.random_text.text = f'ВАМ ВЫПАЛО: {random_num}'
 
 def set_screen(name_screen):
     sm.current = name_screen
